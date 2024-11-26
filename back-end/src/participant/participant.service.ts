@@ -2,13 +2,13 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { CreateParticipantDto } from './dto/create-participant.dto';
 import { UpdateParticipantDto } from './dto/update-participant.dto';
-import { Participant, ParticipantDocument } from './schemas/participant.schema';
+import { Participant } from './schemas/participant.schema';
 import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class ParticipantService {
 
-  constructor( @InjectModel(Participant.name) private participantModel: Model<ParticipantDocument> ){}
+  constructor( @InjectModel(Participant.name) private participantModel: Model<Participant> ){}
 
 
   create(createParticipantDto: CreateParticipantDto) {
