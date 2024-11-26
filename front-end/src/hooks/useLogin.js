@@ -20,7 +20,7 @@ const useLogin = () => {
 
             const formData = { email, password}
             try {
-                const response = await axios.post('http://localhost:5000/auth/login', formData);
+                const response = await axios.post('http://localhost:5001/auth/login', formData);
 
                 if (response.status === 200) {
                     console.log('dkhal hna');
@@ -30,7 +30,7 @@ const useLogin = () => {
                     setEmail('');
                     setPassword('');
                     localStorage.setItem('token', response.data.token);
-                    navigate('/test')
+                    navigate('/dashboard')
                 }
 
             } catch (error) {
