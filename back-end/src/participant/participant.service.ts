@@ -1,26 +1,55 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Model } from 'mongoose';
 import { CreateParticipantDto } from './dto/create-participant.dto';
 import { UpdateParticipantDto } from './dto/update-participant.dto';
+import { Participant, ParticipantDocument } from './schemas/participant.schema';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class ParticipantService {
+
+  constructor( @InjectModel(Participant.name) private participantModel: Model<ParticipantDocument> ){}
+
+
   create(createParticipantDto: CreateParticipantDto) {
-    return 'This action adds a new participant';
+    const { name, email, events } = createParticipantDto;
+
+    const newParticipant = new this.participantModel({
+      name,
+      email,
+      events,
+    });
+
+    return newParticipant.save();
   }
 
-  findAll() {
-    return `This action returns all participant`;
+  async findAll() {
+    return await this.participantModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} participant`;
+  async update(id: string, updateParticipantDto: UpdateParticipantDto): Promise<Participant> {
+    const updatedParticipant = await this.participantModel
+      .findByIdAndUpdate(id, updateParticipantDto, { new: true })
+      .populate('events', 'name date')
+      .exec();
+
+    if (!updatedParticipant) {
+      throw new NotFoundException(`Participant with ID "${id}" not found.`);
+    }
+
+    return updatedParticipant;
   }
 
-  update(id: number, updateParticipantDto: UpdateParticipantDto) {
-    return `This action updates a #${id} participant`;
-  }
+  async remove(id: string) {
+    const participant = await this.participantModel.findByIdAndDelete(id);
 
-  remove(id: number) {
-    return `This action removes a #${id} participant`;
+    if (!participant) {
+      throw new NotFoundException(`Participant with ID "${id}" not found.`);
+    }
+
+    return {
+      message: `Participant with ID ${id} successfully deleted.`
+    }
+    
   }
 }

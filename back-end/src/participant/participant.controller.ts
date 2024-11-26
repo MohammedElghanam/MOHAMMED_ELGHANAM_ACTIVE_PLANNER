@@ -17,18 +17,13 @@ export class ParticipantController {
     return this.participantService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.participantService.findOne(+id);
-  }
-
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateParticipantDto: UpdateParticipantDto) {
-    return this.participantService.update(+id, updateParticipantDto);
+    return this.participantService.update(id, updateParticipantDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.participantService.remove(+id);
+    return this.participantService.remove(id);
   }
 }
