@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ParticipantService } from './participant.service';
 import { ParticipantController } from './participant.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ParticipantSchema } from './schemas/participant.schema';
+import { AuthMiddleware } from 'src/common/auth.middleware';
 
 @Module({
   imports: [
@@ -11,4 +12,8 @@ import { ParticipantSchema } from './schemas/participant.schema';
   controllers: [ParticipantController],
   providers: [ParticipantService],
 })
-export class ParticipantModule {}
+export class ParticipantModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes(ParticipantController);
+  }
+}
