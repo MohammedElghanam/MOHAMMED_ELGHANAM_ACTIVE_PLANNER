@@ -13,10 +13,7 @@ export class AuthMiddleware implements NestMiddleware {
         return res.status(401).json({ message: 'hadi Unauthorized' });
       }
       
-      const decoded = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
-      // req.user = decoded.userId;
-
-      console.log(decoded);
+      jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
       
       next();
     } catch (error) {

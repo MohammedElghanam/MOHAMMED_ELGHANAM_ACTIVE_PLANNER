@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import Login from "./components/forms/login";
 import Dashboard from "./pages/dashboard";
 import Protected from "./hooks/useProtected";
+import ListEvent from "./components/component/listEvent";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index="/" element={ <Login /> } />
+          <Route path="/events" element={ <ListEvent /> } />
           <Route path="/dashboard" element={ 
             <Protected >
               <Dashboard /> 

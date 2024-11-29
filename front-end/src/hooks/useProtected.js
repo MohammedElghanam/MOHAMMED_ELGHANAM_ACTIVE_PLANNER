@@ -16,6 +16,7 @@ const isAuthenticated = () => {
     if (currentTime <= expirationTime) {
       return decodedToken;  
     } else {
+      localStorage.removeItem('token');
       return false; 
     }
   } catch (error) {
