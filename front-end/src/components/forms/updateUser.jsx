@@ -2,7 +2,7 @@ import React from 'react'
 
 import Select from 'react-select';
 
-export default function UpdateUser({ hidePopUpPartisipent }) {
+export default function UpdateUser({ hidePopUpUpdatePartisipent }) {
 
     const options = [
         { value: 'chocolate', label: 'Chocolate' },
@@ -17,7 +17,7 @@ export default function UpdateUser({ hidePopUpPartisipent }) {
       <div className=" bg-white p-5 lg:p-10 rounded-lg">
                 <div className=" flex justify-between items-center mb-3 lg:mb-6">
                   <h1 className=" text-center font-semibold text-gray-900 text-lg lg:text-xl">Update Participant</h1>
-                  <button onClick={ hidePopUpPartisipent }><i class="fa-solid fa-xmark fa-lg text-purple-600 w-7 h-7 rounded-md flex justify-center items-center hover:bg-gray-700 hover:bg-opacity-25"></i></button>
+                  <button onClick={ hidePopUpUpdatePartisipent }><i class="fa-solid fa-xmark fa-lg text-purple-600 w-7 h-7 rounded-md flex justify-center items-center hover:bg-gray-700 hover:bg-opacity-25"></i></button>
                 </div>
                 <form 
                   // onSubmit={handleSubmit}

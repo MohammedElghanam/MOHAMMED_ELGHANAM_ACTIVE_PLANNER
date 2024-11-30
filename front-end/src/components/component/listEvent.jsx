@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import NavBar from './navBar'
 import { useNavigate } from 'react-router-dom';
 import DropDown from './dropDown';
+import UpdateEvent from '../forms/updateEvent';
 
 export default function ListEvent() {
 
@@ -13,8 +14,18 @@ export default function ListEvent() {
     const [dropDown, setDropDown] = useState(false);
     
     const showDropDown = () => {
-        setDropDown( (prevState) => !prevState )
+      setDropDown( (prevState) => !prevState )
     }
+    
+    const [updateEvent, setUpdateEvent] = useState();
+
+    const showPopUpUpdateEvent = () => {
+      setUpdateEvent(true)
+     }
+   
+     const hidePopUpUpdateEvent = () => {
+      setUpdateEvent(false)
+     }
 
 
   return (
@@ -31,7 +42,7 @@ export default function ListEvent() {
 
               <div className=" col-span-12 flex justify-between items-center">
                 <div className=" flex justify-center items-center gap-4">
-                  <button onClick={ redirect }><i class="fa-solid fa-arrow-left fa-lg w-8 h-8 flex justify-center items-center hover:bg-gray-700 hover:bg-opacity-15 hover:duration-500 rounded-md"></i></button>
+                  <button onClick={ redirect }><i class="fa-solid fa-arrow-left fa-lg w-8 h-8 flex justify-center items-center hover:bg-gray-700 hover:bg-opacity-15 hover:duration-500 rounded-md text-purple-700"></i></button>
                   <h1 className=' font-semibold text-2xl'> Events </h1>
                 </div>
                 <div className=" flex justify-center items-center gap-4">
@@ -47,28 +58,33 @@ export default function ListEvent() {
                 <div className=" w-full h-28 rounded-xl px-3 flex flex-col gap-2">
                   <div className=" relative flex justify-between items-center ">
                     <h1 className=' font-semibold text-md text-gray-800'> Jornée D'integration</h1>
-                    <button onClick={ showDropDown }><i class="fa-solid fa-ellipsis-vertical text-gray-800 mr-2"></i></button>
-                    { dropDown && <DropDown /> }
+                    <button onClick={ showDropDown }><i class="fa-solid fa-ellipsis-vertical text-gray-800 mr-2 py-2 px-3.5 rounded-full hover:bg-purple-600 hover:bg-opacity-25 hover:duration-500"></i></button>
+                    { dropDown && <DropDown showPopUpUpdate={ showPopUpUpdateEvent } /> }
                   </div>
                   <div className=" flex gap-4">
                     <div className=" flex flex-col justify-center items-start gap-4">
                       <div className=" flex justify-start items-center gap-2 ">
                         <i class="fa-solid fa-xs fa-clock text-gray-800"></i>
-                        <p className=' text-xs font-medium text-[#4ef037] px-1 py-0.5 bg-[#4ef037] rounded-md bg-opacity-10 border border-[#4ef037]'> 2024-12-30T10:00:00Z </p>
+                        <p className=' text-xs font-medium text-[#9333ea] px-1 py-0.5 bg-[#9333ea] rounded-md bg-opacity-10 border border-[#9333ea]'> 2024-12-30T 10:00:00Z </p>
                       </div>
                       <div className="  flex justify-start items-center gap-3">
                         <i class="fa-regular fa-user fa-sm text-gray-800"></i>
                         <p className=' text-xs font-medium text-gray-800'>124 Number</p>
                       </div>
                     </div>
-                    <div className="  flex flex-col justify-start items-center gap-3">
+                    <div className="  flex flex-col justify-start items-start gap-3">
                       <div className=" flex justify-start items-center gap-3 ">
                         <i class="fa-solid fa-sm fa-location-dot text-gray-800"></i>
                         <p className=' text-xs font-medium text-gray-800'> New Stadium, City Y </p>
                       </div>
                       <div className=" flex justify-start items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><circle cx={12} cy={2} r={0} fill="#4ef037"><animate attributeName="r" begin={0} calcMode="spline" dur="2s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate></circle><circle cx={12} cy={2} r={0} fill="#4ef037" transform="rotate(45 12 12)"><animate attributeName="r" begin="0.25s" calcMode="spline" dur="2s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate></circle><circle cx={12} cy={2} r={0} fill="#4ef037" transform="rotate(90 12 12)"><animate attributeName="r" begin="0.5s" calcMode="spline" dur="2s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate></circle><circle cx={12} cy={2} r={0} fill="#4ef037" transform="rotate(135 12 12)"><animate attributeName="r" begin="0.75s" calcMode="spline" dur="2s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate></circle><circle cx={12} cy={2} r={0} fill="#4ef037" transform="rotate(180 12 12)"><animate attributeName="r" begin="1s" calcMode="spline" dur="2s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate></circle><circle cx={12} cy={2} r={0} fill="#4ef037" transform="rotate(225 12 12)"><animate attributeName="r" begin="1.25s" calcMode="spline" dur="2s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate></circle><circle cx={12} cy={2} r={0} fill="#4ef037" transform="rotate(270 12 12)"><animate attributeName="r" begin="1.5s" calcMode="spline" dur="2s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate></circle><circle cx={12} cy={2} r={0} fill="#4ef037" transform="rotate(315 12 12)"><animate attributeName="r" begin="1.75s" calcMode="spline" dur="2s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate></circle></svg>
-                        <p className=' text-[#4ef037] text-xs font-medium'>Now running ...</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                          <path fill="#9333ea" d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z" opacity="0.5" />
+                          <path fill="#9333ea" d="M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z">
+                            <animateTransform attributeName="transform" dur="2.3s" from="0 12 12" repeatCount="indefinite" to="360 12 12" type="rotate" />
+                          </path>
+                        </svg>
+                        <p className=' text-[#9333ea] text-xs font-medium'>Now running ...</p>
                       </div>
                     </div>
                   </div>
@@ -89,6 +105,8 @@ export default function ListEvent() {
 
           </div>
         </div>
+
+        { updateEvent && <UpdateEvent hidePopUpUpdateEvent={ hidePopUpUpdateEvent } /> }
     </>
   )
 }

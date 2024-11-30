@@ -1,6 +1,6 @@
 import React from 'react'
 import Select from 'react-select';
-export default function UpdateEvent({ hidePopUpEvent }) {
+export default function UpdateEvent({ hidePopUpUpdateEvent }) {
 
   const options = [
       { value: 'chocolate', label: 'Chocolate' },
@@ -15,7 +15,7 @@ export default function UpdateEvent({ hidePopUpEvent }) {
           <div className=" bg-white p-5 lg:p-10 rounded-lg">
           <div className=" flex justify-between items-center mb-3 lg:mb-6">
                 <h1 className=" text-center font-semibold text-gray-900 text-lg lg:text-xl">Update Event</h1>
-                <button onClick={ hidePopUpEvent }><i class="fa-solid fa-xmark fa-lg text-purple-600 w-7 h-7 rounded-md flex justify-center items-center hover:bg-gray-700 hover:bg-opacity-25"></i></button>
+                <button onClick={ hidePopUpUpdateEvent }><i class="fa-solid fa-xmark fa-lg text-purple-600 w-7 h-7 rounded-md flex justify-center items-center hover:bg-gray-700 hover:bg-opacity-25"></i></button>
               </div>
               <form 
                   // onSubmit={handleSubmit}
@@ -94,7 +94,7 @@ export default function UpdateEvent({ hidePopUpEvent }) {
                     </div>
   
                     <div className="">
-                        <button className=" w-full h-9 bg-purple-700 hover:bg-purple-600 rounded-md text-white font-semibold text-sm lg:text-sm">Create</button>
+                        <button className=" w-full h-9 bg-purple-700 hover:bg-purple-600 rounded-md text-white font-semibold text-sm lg:text-sm">Update</button>
                     </div>
                     
                 </form>

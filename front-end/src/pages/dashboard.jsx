@@ -21,6 +21,7 @@ export default function Dashboard() {
 
   const [createPartispent, setCreatePartispent] = useState(false);
   const [ceateEvent, setCeateEvent] = useState(false);
+  const [updatePartispent, setUpdatePartispent] = useState(false);
 
   const showPopUpPartisipent = () => {
    setCreatePartispent(true)
@@ -30,6 +31,14 @@ export default function Dashboard() {
    setCreatePartispent(false)
   }
 
+  const showPopUpUpdatePartisipent = () => {
+    setUpdatePartispent(true)
+   }
+ 
+   const hidePopUpUpdatePartisipent = () => {
+    setUpdatePartispent(false)
+   }
+
   const showPopUpEvent = () => {
    setCeateEvent(true)
   }
@@ -37,6 +46,8 @@ export default function Dashboard() {
   const hidePopUpEvent = () => {
    setCeateEvent(false)
   }
+
+
 
   return (
     <div className=" flex justify-center w-full h-screen fixed">
@@ -60,7 +71,7 @@ export default function Dashboard() {
               <Events />
 
               {/* users  */}
-              <Users />
+              <Users showPopUpUpdatePartisipent={ showPopUpUpdatePartisipent } />
 
             </div>
 
@@ -89,8 +100,9 @@ export default function Dashboard() {
           { createPartispent && <Participant hidePopUpPartisipent={ hidePopUpPartisipent } />}
           { ceateEvent && <Event hidePopUpEvent={ hidePopUpEvent } /> }
 
-          {/* <UpdateUser hidePopUpPartisipent={ hidePopUpPartisipent } /> */}
-          {/* <UpdateEvent hidePopUpEvent={ hidePopUpEvent } /> */}
+          
+          { updatePartispent && <UpdateUser hidePopUpUpdatePartisipent={ hidePopUpUpdatePartisipent } /> }
+          
           
           
     </div>
