@@ -10,5 +10,5 @@ export class CreateParticipantDto {
 
     @IsOptional()
     @IsArray()
-    readonly events?: Types.ObjectId[];
+    events?: Types.ObjectId[];
 }

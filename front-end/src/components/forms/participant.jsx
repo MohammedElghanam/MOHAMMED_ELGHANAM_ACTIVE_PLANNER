@@ -1,13 +1,22 @@
 import React from 'react'
 import Select from 'react-select';
+import useCreatePartisipent from '../../hooks/useCreatePartisipent';
 
 export default function Participant({ hidePopUpPartisipent }) {
 
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' },
-    ];
+  const { email, setEmail, name, setName, selectedOptions, setSelectedOptions, setImage, errors, handleSubmit } = useCreatePartisipent();
+
+  const events = [
+    { _id: 'event1', name: 'Event 1' },
+    { _id: 'event2', name: 'Event 2' },
+    { _id: 'event3', name: 'Event 3' }
+  ];
+
+  const options = events.map(event => ({
+    value: event._id, 
+    label: event.name 
+  }));
+  
 
   return (
     <div className=" absolute top-0 w-full h-screen flex justify-center items-center bg-gray-800 bg-opacity-25 z-50">
@@ -18,52 +27,59 @@ export default function Participant({ hidePopUpPartisipent }) {
                 <button onClick={ hidePopUpPartisipent }><i class="fa-solid fa-xmark fa-lg text-purple-600 w-7 h-7 rounded-md flex justify-center items-center hover:bg-gray-700 hover:bg-opacity-25"></i></button>
               </div>
               <form 
-                // onSubmit={handleSubmit}
+                onSubmit={handleSubmit}
               >
                   <div className=" flex flex-col justify-center items-start mb-3">
                         <label className=" text-xs lg:text-sm font-medium text-gray-900 mb-1" htmlFor="name">Username <span className=" text-red-600">*</span></label>
                         <input 
-                            // onChange={ (e) => { setName(e.target.value) }}
-                            // value={name}
+                            onChange={ (e) => { setName(e.target.value) }}
+                            value={name}
                             type="text"
                             id="name" 
                             placeholder=" Enter Username" 
                             className=" w-60 lg:w-72 h-8 lg:h-9 px-1 rounded-md border-[0.5px] border-gray-500 focus:border-blue-600 text-xs lg:text-sm" 
                         />
-                        {/* {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>} */}
+                        {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                   </div>
                   <div className=" flex flex-col justify-center items-start mb-3">
                       <label className=" text-xs lg:text-sm font-medium text-gray-900 mb-1" htmlFor="email">Email<span className=" text-red-600">*</span></label>
                       <input 
-                          // onChange={(e) => { setEmail(e.target.value) } }
-                          // value={email}
+                          onChange={(e) => { setEmail(e.target.value) } }
+                          value={email}
                           id="email" 
                           type="email"
                           name="email"
                           placeholder=" Enter Email Address" 
                           className=" w-60 lg:w-72 h-8 lg:h-9 px-1 rounded-md border-[0.5px] border-gray-500 focus:border-blue-600 text-xs lg:text-sm" 
                       />
-                      {/* {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>} */}
+                      {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                   </div>
                   <div class="w-64 mb-3">
                       <label for="multiple-select" class="text-xs lg:text-sm font-medium text-gray-900 mb-1 block">Select Options</label>
                       <Select
                         className=" w-72 lg:w-72 h-8 lg:h-9 border-gray-800 rounded-md focus:border-blue-600 text-xs lg:text-sm mb-4"
                         isMulti
-                        name="flavors"
+                        name="selectedOptions"
                         options={options}
-                        // onChange={(e) => { setOption(e.target.value) } }
+                        value={options.filter(option => selectedOptions.includes(option.value))}
+                        onChange={(selectedOptions) => {
+                          setSelectedOptions(selectedOptions.map(option => option.value)); 
+                        }}
                         classNamePrefix="select"
                       />
-                    {/* {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>} */}
                   
                   </div>
 
                   <div className=" mb-3">
                     
-                    <label class="text-xs lg:text-sm font-medium text-gray-900 mb-1 block" for="file_input">Upload image</label>
-                    <input class=" w-full h-10 text-sm border border-gray-300 rounded-lg cursor-pointer bg-gray-50" id="file_input" type="file" />
-
+                    <label class="text-xs lg:text-sm font-medium text-gray-900 mb-1 block" for="file_input">Upload image <span className=" text-red-600">*</span></label>
+                    <input 
+                      class=" w-full h-10 text-sm border border-gray-300 rounded-lg cursor-pointer bg-gray-50" 
+                      id="file_input" 
+                      type="file"
+                      onChange={ (e) => { setImage(e.target.files[0]) } }
+                    />
+                    {errors.image && <p className="text-red-500 text-xs mt-1">{errors.image}</p>}
                   </div>
 
                   <div className="">

@@ -10,6 +10,9 @@ export class Participant {
   @Prop({ required: true, unique: true })
   email: string;
 
+  @Prop({ required: true })
+  image: string;
+
   @Prop({ type: [{ type: Types.ObjectId, ref: 'Event' }] })
   events: Types.ObjectId[];
 }
