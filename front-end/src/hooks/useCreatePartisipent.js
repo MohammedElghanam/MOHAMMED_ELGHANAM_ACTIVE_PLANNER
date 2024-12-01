@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom'; 
 import axios from "axios";
 import { validatePartisipent } from "../validation/validPartisipent";
 
 const useCreatePartisipent = () => {
-    const navigate = useNavigate();
     const [name, setName] = useState();
     const [email, setEmail] = useState('');
     const [selectedOptions, setSelectedOptions] = useState([]);

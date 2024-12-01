@@ -22,16 +22,18 @@ export default function Dashboard() {
   const [createPartispent, setCreatePartispent] = useState(false);
   const [ceateEvent, setCeateEvent] = useState(false);
   const [updatePartispent, setUpdatePartispent] = useState(false);
+  const [recivedDataUpdatePartispent, setRecivedDataUpdatePartispent] = useState({});
 
   const showPopUpPartisipent = () => {
    setCreatePartispent(true)
   }
 
   const hidePopUpPartisipent = () => {
-   setCreatePartispent(false)
+    setCreatePartispent(false)
   }
 
-  const showPopUpUpdatePartisipent = () => {
+  const showPopUpUpdatePartisipent = (partisipent) => {    
+    setRecivedDataUpdatePartispent(partisipent)
     setUpdatePartispent(true)
    }
  
@@ -75,25 +77,6 @@ export default function Dashboard() {
 
             </div>
 
-
-
-
-
-
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
           </div>
         </div>
 
@@ -101,7 +84,7 @@ export default function Dashboard() {
           { ceateEvent && <Event hidePopUpEvent={ hidePopUpEvent } /> }
 
           
-          { updatePartispent && <UpdateUser hidePopUpUpdatePartisipent={ hidePopUpUpdatePartisipent } /> }
+          { updatePartispent && <UpdateUser hidePopUpUpdatePartisipent={ hidePopUpUpdatePartisipent } recivedDataUpdatePartispent={ recivedDataUpdatePartispent } /> }
           
           
           
