@@ -22,7 +22,7 @@ const validateEvent = (title, date, location, description, image) => {
 
     if (!date) {
         errors.date = 'date is required';
-    }else if (new Date(date).getTime() < Date.now()) {
+    }else if (new Date(date).getTime() < Date.now() - 3600 * 1000) {
         errors.date = 'Please enter a date greater than the current time.';
     }
 

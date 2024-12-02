@@ -1,44 +1,31 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { format } from 'date-fns';
 import NavBar from './navBar'
 import { useNavigate } from 'react-router-dom';
 import DropDown from './dropDown';
 import UpdateEvent from '../forms/updateEvent';
+import useDisplayEvent from '../../hooks/useDisplayEvents';
 
 export default function ListEvent() {
+
+  const { Events, error, dropDown, showDropDown, activeEvent, updateEvent, recivedUpdateEvent, hidePopUpUpdateEvent, showPopUpUpdateEvent, deleteEvent } = useDisplayEvent();
 
     const navigate = useNavigate();
     const redirect = () => {
         navigate('/dashboard');
     }
 
-    const [dropDown, setDropDown] = useState(false);
-    
-    const showDropDown = () => {
-      setDropDown( (prevState) => !prevState )
-    }
-    
-    const [updateEvent, setUpdateEvent] = useState();
-
-    const showPopUpUpdateEvent = () => {
-      setUpdateEvent(true)
-     }
-   
-     const hidePopUpUpdateEvent = () => {
-      setUpdateEvent(false)
-     }
-
-
   return (
     <>
       <div className=" w-full h-screen bg-gray-50">
           
           <div className=" grid grid-cols-12 justify-center items-start w-full h-full  overflow-y-scroll">
-            <div className=" col-span-12 bg-green-700 h-14">
+            <div className=" col-span-12 h-14">
               <div className=" w-full bg-white fixed z-50">
                 <NavBar />
               </div>
             </div>
-            <div className=" col-span-12 grid grid-cols-12 justify-center items-center gap-8 py-3 px-20">
+            <div className=" col-span-12 grid grid-cols-12 justify-center items-start gap-8 py-3 px-20">
 
               <div className=" col-span-12 flex justify-between items-center">
                 <div className=" flex justify-center items-center gap-4">
@@ -51,54 +38,53 @@ export default function ListEvent() {
                 </div>
               </div>
 
-              <div className=" col-span-4 border border-gray-200 rounded-xl shadow-xl hover:translate-x-0">
-                <div className=" p-3">
-                  <img className='h-52 w-full rounded-xl' src="img.png" alt="" />
-                </div>
-                <div className=" w-full h-28 rounded-xl px-3 flex flex-col gap-2">
-                  <div className=" relative flex justify-between items-center ">
-                    <h1 className=' font-semibold text-md text-gray-800'> Jornée D'integration</h1>
-                    <button onClick={ showDropDown }><i class="fa-solid fa-ellipsis-vertical text-gray-800 mr-2 py-2 px-3.5 rounded-full hover:bg-purple-600 hover:bg-opacity-25 hover:duration-500"></i></button>
-                    { dropDown && <DropDown showPopUpUpdate={ showPopUpUpdateEvent } /> }
-                  </div>
-                  <div className=" flex gap-4">
-                    <div className=" flex flex-col justify-center items-start gap-4">
-                      <div className=" flex justify-start items-center gap-2 ">
-                        <i class="fa-solid fa-xs fa-clock text-gray-800"></i>
-                        <p className=' text-xs font-medium text-[#9333ea] px-1 py-0.5 bg-[#9333ea] rounded-md bg-opacity-10 border border-[#9333ea]'> 2024-12-30T 10:00:00Z </p>
-                      </div>
-                      <div className="  flex justify-start items-center gap-3">
-                        <i class="fa-regular fa-user fa-sm text-gray-800"></i>
-                        <p className=' text-xs font-medium text-gray-800'>124 Number</p>
-                      </div>
-                    </div>
-                    <div className="  flex flex-col justify-start items-start gap-3">
-                      <div className=" flex justify-start items-center gap-3 ">
-                        <i class="fa-solid fa-sm fa-location-dot text-gray-800"></i>
-                        <p className=' text-xs font-medium text-gray-800'> New Stadium, City Y </p>
-                      </div>
-                      <div className=" flex justify-start items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                          <path fill="#9333ea" d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z" opacity="0.5" />
-                          <path fill="#9333ea" d="M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z">
-                            <animateTransform attributeName="transform" dur="2.3s" from="0 12 12" repeatCount="indefinite" to="360 12 12" type="rotate" />
-                          </path>
-                        </svg>
-                        <p className=' text-[#9333ea] text-xs font-medium'>Now running ...</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {Events.map( event => (
+                   <div className=" col-span-4 border border-gray-200 rounded-xl shadow-xl hover:translate-x-0">
+                   <div className=" p-3">
+                     <img className='h-52 w-full rounded-xl' src={ event.image } alt="" />
+                   </div>
+                   <div className=" w-full h-28 rounded-xl px-3 flex flex-col gap-2">
+                     <div className=" relative flex justify-between items-center ">
+                       <h1 className=' font-semibold text-md text-gray-800'> { event.title }</h1>
+                       <button onClick={ () => showDropDown(event._id, event) }><i class="fa-solid fa-ellipsis-vertical text-gray-800 mr-2 py-2 px-3.5 rounded-full hover:bg-purple-600 hover:bg-opacity-25 hover:duration-500"></i></button>
+                       { activeEvent === event._id && dropDown && <DropDown showPopUpUpdate={ showPopUpUpdateEvent } showData={ recivedUpdateEvent } deleteEvent={ deleteEvent } /> }
+                     </div>
+                     
+                     <div className=" flex gap-4">
+                       <div className=" flex flex-col justify-center items-start gap-4">
+                         <div className=" flex justify-start items-center gap-2 ">
+                           <i class="fa-solid fa-xs fa-clock text-gray-800"></i>
+                           <p className=' text-xs font-medium text-[#9333ea] px-1 py-0.5 bg-[#9333ea] rounded-md bg-opacity-10 border border-[#9333ea]'> {format(new Date(event.date), 'dd MMM, yyyy : hh:mma - hh:mma')} </p>
+                         </div>
+                         <div className="  flex justify-start items-center gap-3">
+                           <i class="fa-regular fa-user fa-sm text-gray-800"></i>
+                           <p className=' text-xs font-medium text-purple-800'>{ event.participants.length } Number</p>
+                         </div>
+                       </div>
+                       <div className="  flex flex-col justify-start items-start gap-3">
+                         <div className=" flex justify-start items-center gap-3 ">
+                           <i class="fa-solid fa-sm fa-location-dot text-gray-800"></i>
+                           <p className=' text-xs font-medium text-purple-800'> { event.location } </p>
+                         </div>
+                          { event.Date === Date.now() &&
+                            <div className=" flex justify-start items-center gap-3">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="#9333ea" d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z" opacity="0.5" />
+                                <path fill="#9333ea" d="M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z">
+                                  <animateTransform attributeName="transform" dur="2.3s" from="0 12 12" repeatCount="indefinite" to="360 12 12" type="rotate" />
+                                </path>
+                              </svg>
+                              <p className=' text-[#9333ea] text-xs font-medium'>Now running ...</p>
+                            </div>
+                          }
+                       </div>
+                     </div>
+                   </div>
+                 </div> 
+                  ))}
+              
 
-              <div className=" col-span-4 h-72 bg-purple-700 rounded-xl"></div>
-              <div className=" col-span-4 h-72 bg-purple-700 rounded-xl"></div>
-              <div className=" col-span-4 h-72 bg-purple-700 rounded-xl"></div>
-              <div className=" col-span-4 h-72 bg-purple-700 rounded-xl"></div>
-              <div className=" col-span-4 h-72 bg-purple-700 rounded-xl"></div>
-              <div className=" col-span-4 h-72 bg-purple-700 rounded-xl"></div>
-              <div className=" col-span-4 h-72 bg-purple-700 rounded-xl"></div>
-              <div className=" col-span-4 h-72 bg-purple-700 rounded-xl"></div>
+        
 
             </div>
             

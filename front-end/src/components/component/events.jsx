@@ -1,8 +1,10 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
+
 export default function Events() {
 
+  
   const navigate = useNavigate();
 
   const redirect = () => {

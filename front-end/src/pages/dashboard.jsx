@@ -32,7 +32,8 @@ export default function Dashboard() {
     setCreatePartispent(false)
   }
 
-  const showPopUpUpdatePartisipent = (partisipent) => {    
+  const showPopUpUpdatePartisipent = (partisipent) => {
+    
     setRecivedDataUpdatePartispent(partisipent)
     setUpdatePartispent(true)
    }
