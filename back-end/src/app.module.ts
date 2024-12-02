@@ -6,7 +6,6 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { EventModule } from './event/event.module';
 import { ParticipantModule } from './participant/participant.module';
-import { ImageModule } from './image/image.module';
 
 @Module({
   imports: [
@@ -16,8 +15,7 @@ import { ImageModule } from './image/image.module';
   MongooseModule.forRoot(process.env.DB_NAME),
   AuthModule,
   EventModule,
-  ParticipantModule,
-  ImageModule],
+  ParticipantModule],
   controllers: [AppController],
   providers: [AppService],
 })

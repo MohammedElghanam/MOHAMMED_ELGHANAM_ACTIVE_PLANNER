@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Client } from 'minio';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -7,23 +8,36 @@ import { Model } from 'mongoose';
 @Injectable()
 export class EventService {
 
-  constructor(@InjectModel(Event.name) private eventModel: Model<Event>){}
+  private readonly minioClient: Client;
 
-
-
-  async create(createEventDto: CreateEventDto): Promise<Event> {
-    const { title, date, location, description, maxParticipants, participants } = createEventDto;
-  
-    
-    const newEvent = new this.eventModel({
-      title,
-      date,
-      location,
-      description,
-      maxParticipants,
-      isActive: true, 
-      participants,
+  constructor(@InjectModel(Event.name) private eventModel: Model<Event>){
+    this.minioClient = new Client({
+      endPoint: 'localhost',
+      port: 9000,
+      useSSL: false,
+      accessKey: 'minioadmin',
+      secretKey: 'minioadmin',
     });
+  }
+
+
+
+  async create(createEventDto: CreateEventDto, file: Express.Multer.File): Promise<Event> {
+    const bucketName = 'event';
+    const image = await this.uploadFile(bucketName, file);
+
+    if (typeof createEventDto.participants === 'string') {
+      createEventDto.participants = JSON.parse(createEventDto.participants);     
+    }
+
+    const eventData = {
+      ...createEventDto,
+      image,
+    };
+
+    console.log(eventData);
+    
+    const newEvent = new this.eventModel(eventData);
   
     return await newEvent.save();
   }
@@ -55,4 +69,25 @@ export class EventService {
       message: `Event with ID ${id} successfully deleted.`
     }
   }
+
+  async uploadFile(bucketName: string, file: Express.Multer.File): Promise<string> {
+    const fileName = `${Date.now()}-${file.originalname}`; 
+
+    const exists = await this.minioClient.bucketExists(bucketName);
+    if (!exists) {
+      await this.minioClient.makeBucket(bucketName, 'eu-west-1');
+      console.log(`Bucket ${bucketName} created`);
+    }
+
+    await this.minioClient.putObject(
+      bucketName,
+      fileName,
+      file.buffer,
+      file.size,
+      { 'Content-Type': file.mimetype },
+    );
+
+    return `http://localhost:9000/${bucketName}/${fileName}`;
+  }
+
 }

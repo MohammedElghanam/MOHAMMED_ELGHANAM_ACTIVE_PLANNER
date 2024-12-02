@@ -17,9 +17,9 @@ export class Event {
   description: string;
 
   @Prop({ required: true })
-  maxParticipants: number;
+  image: string;
 
-  @Prop({ default: true })
+  @Prop({ default: false })
   isActive: boolean;
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'Participant' }] })
