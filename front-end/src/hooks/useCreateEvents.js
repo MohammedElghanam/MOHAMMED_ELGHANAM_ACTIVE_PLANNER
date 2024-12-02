@@ -6,12 +6,13 @@ import { validateEvent } from "../validation/validEvent";
 const useCreateEvent = () => {
     const [users, setUsers] = useState([]);
     const [title, setTitle] = useState();
-    const [date, setDate] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
     const [location, setLocation] = useState('');
     const [description, setDescription] = useState('');
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [image, setImage] = useState(null);
-    const [errors, setErrors] = useState({ title: '', date: '', location: '', description: '', image: '' });
+    const [errors, setErrors] = useState({ title: '', startDate: '', endDate: '', location: '', description: '', image: '' });
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -38,18 +39,19 @@ const useCreateEvent = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrors({ title: '', date: '', location: '', description: '', image: '' });
+        setErrors({ title: '', startDate: '', endDate: '', location: '', description: '', image: '' });
 
         const formData = new FormData();
         formData.append('title', title);
-        formData.append('date', date);
+        formData.append('startDate', startDate);
+        formData.append('endDate', endDate);
         formData.append('location', location);
         formData.append('description', description);
         formData.append('participants', JSON.stringify(selectedOptions));
         formData.append('image', image);
         
 
-        const validationErrors = validateEvent(title, date, location, description, image);
+        const validationErrors = validateEvent(title, startDate, endDate, location, description, image);
         setErrors(validationErrors);
         // if (Object.keys(validationErrors).length > 0) return;
 
@@ -78,7 +80,8 @@ const useCreateEvent = () => {
 
                 if (response.status === 201) {
                     setTitle('');
-                    setDate('');
+                    setStartDate('');
+                    setEndDate('');
                     setLocation('');
                     setDescription('');
                     setSelectedOptions('');
@@ -106,8 +109,10 @@ const useCreateEvent = () => {
         users,
         title,
         setTitle,
-        date,
-        setDate,
+        startDate,
+        setStartDate,
+        endDate,
+        setEndDate,
         location,
         setLocation,
         description,

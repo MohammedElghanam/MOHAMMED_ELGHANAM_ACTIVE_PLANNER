@@ -3,7 +3,7 @@ import { Client } from 'minio';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 @Injectable()
 export class EventService {
@@ -22,12 +22,15 @@ export class EventService {
 
 
 
-  async create(createEventDto: CreateEventDto, file: Express.Multer.File): Promise<Event> {
+  async create(createEventDto: CreateEventDto, file: Express.Multer.File): Promise <Event> {
     const bucketName = 'event';
     const image = await this.uploadFile(bucketName, file);
 
     if (typeof createEventDto.participants === 'string') {
-      createEventDto.participants = JSON.parse(createEventDto.participants);     
+      createEventDto.participants = JSON.parse(createEventDto.participants);
+      createEventDto.participants = (createEventDto.participants as unknown as string[]).map(
+        (id: string) => new Types.ObjectId(id)
+      );
     }
 
     const eventData = {
@@ -42,8 +45,22 @@ export class EventService {
     return await newEvent.save();
   }
 
+  // async findAll() {
+  //   return await this.eventModel.find().populate('participants').exec();
+  // }
+
   async findAll() {
-    return await this.eventModel.find().exec();
+    try {
+      const events = await this.eventModel
+        .find()
+        // .populate('participant')
+        .populate({ path: 'participants', model: 'Participant' }) 
+        .exec();
+
+      return events;
+    } catch (error) {
+      throw new Error('Error fetching events with participants');
+    }
   }
 
   async update(id: string, updateEventDto: UpdateEventDto) {

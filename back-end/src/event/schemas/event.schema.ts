@@ -1,6 +1,6 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
-import { Participant } from '../../participant/schemas/participant.schema';
+import { Participant } from 'src/participant/schemas/participant.schema';
 
 @Schema()
 export class Event {
@@ -8,7 +8,10 @@ export class Event {
   title: string;
 
   @Prop({ required: true })
-  date: Date;
+  startDate: Date;
+
+  @Prop({ required: true })
+  endDate: Date;
 
   @Prop({ required: true })
   location: string;

@@ -4,7 +4,7 @@ import useDisplayPartisipent from '../../hooks/useDisplayPartisipent';
 
 export default function Users({ showPopUpUpdatePartisipent }) {
 
-  const { participants, dropDown, activeParticipant, showDropDown, updatePartisipent } = useDisplayPartisipent();
+  const { participants, dropDown, activeParticipant, showDropDown, updatePartisipent, deleteParticipant } = useDisplayPartisipent();
 
   return (
     <>
@@ -27,7 +27,7 @@ export default function Users({ showPopUpUpdatePartisipent }) {
                         <i class="fa-solid fa-ellipsis"></i>
                       </button>
                       
-                      { activeParticipant === participant._id && dropDown && <DropDown showPopUpUpdate={ showPopUpUpdatePartisipent } showData={ updatePartisipent } /> }
+                      { activeParticipant === participant._id && dropDown && <DropDown showPopUpUpdate={ showPopUpUpdatePartisipent } showData={ updatePartisipent } deleteEvent={ deleteParticipant } /> }
                     </div>
                   ))}              
                 </div>

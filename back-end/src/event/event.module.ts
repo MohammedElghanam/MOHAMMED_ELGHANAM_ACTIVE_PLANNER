@@ -4,10 +4,11 @@ import { EventController } from './event.controller';
 import { EventSchema } from './schemas/event.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthMiddleware } from 'src/common/auth.middleware';
+import { Participant, ParticipantSchema } from 'src/participant/schemas/participant.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: 'Event', schema: EventSchema}])
+    MongooseModule.forFeature([{ name: 'Event', schema: EventSchema}, { name: Participant.name, schema: ParticipantSchema }])
   ],
   controllers: [EventController],
   providers: [EventService],

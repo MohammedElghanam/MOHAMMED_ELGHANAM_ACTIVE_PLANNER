@@ -54,7 +54,9 @@ export default function ListEvent() {
                        <div className=" flex flex-col justify-center items-start gap-4">
                          <div className=" flex justify-start items-center gap-2 ">
                            <i class="fa-solid fa-xs fa-clock text-gray-800"></i>
-                           <p className=' text-xs font-medium text-[#9333ea] px-1 py-0.5 bg-[#9333ea] rounded-md bg-opacity-10 border border-[#9333ea]'> {format(new Date(event.date), 'dd MMM, yyyy : hh:mma - hh:mma')} </p>
+                           <p className=' text-xs font-medium text-[#9333ea] px-1 py-0.5 bg-[#9333ea] rounded-md bg-opacity-10 border border-[#9333ea]'> 
+                            {format(new Date(event.startDate), 'dd MMM, yyyy : hh:mma')} -  {format(new Date(event.endDate), 'hh:mma')} 
+                            </p>
                          </div>
                          <div className="  flex justify-start items-center gap-3">
                            <i class="fa-regular fa-user fa-sm text-gray-800"></i>
@@ -66,7 +68,7 @@ export default function ListEvent() {
                            <i class="fa-solid fa-sm fa-location-dot text-gray-800"></i>
                            <p className=' text-xs font-medium text-purple-800'> { event.location } </p>
                          </div>
-                          { event.Date === Date.now() &&
+                          { new Date(event.startDate) <= Date.now() && new Date(event.endDate) >= Date.now() &&
                             <div className=" flex justify-start items-center gap-3">
                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path fill="#9333ea" d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z" opacity="0.5" />

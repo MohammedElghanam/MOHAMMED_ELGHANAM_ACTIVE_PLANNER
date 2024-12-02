@@ -1,9 +1,9 @@
 
-const validateEvent = (title, date, location, description, image) => {
+const validateEvent = (title, startDate, endDate, location, description, image) => {
     const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
     const maxSize = 5 * 1024 * 1024;
     const errors = {
-        title: '', date: '', location: '', description: '', image: ''
+        title: '', startDate: '', endDate: '', location: '', description: '', image: ''
     };
 
     if (!title || title.trim() === '') {
@@ -20,10 +20,14 @@ const validateEvent = (title, date, location, description, image) => {
         errors.description = 'Description must not exceed 300 characters.';
     }
 
-    if (!date) {
-        errors.date = 'date is required';
-    }else if (new Date(date).getTime() < Date.now() - 3600 * 1000) {
-        errors.date = 'Please enter a date greater than the current time.';
+    if (!startDate) {
+        errors.startDate = 'startDate is required';
+    }else if (new Date(startDate).getTime() < Date.now() - 3600 * 1000) {
+        errors.startDate = 'Please enter a date greater than the current time.';
+    }
+
+    if (!endDate) {
+        errors.endDate = 'endDate is required';
     }
 
     if (!image) {

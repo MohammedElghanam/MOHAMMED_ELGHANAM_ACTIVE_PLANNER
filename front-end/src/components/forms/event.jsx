@@ -5,19 +5,7 @@ import useCreateEvent from '../../hooks/useCreateEvents';
 export default function Event({ hidePopUpEvent }) {
   
   
-    const { users, title, setTitle, date, setDate, location, setLocation, description, setDescription, selectedOptions, setSelectedOptions, setImage, errors, handleSubmit} = useCreateEvent();
-
-  const partisipents = [
-    { _id: 'event1', name: 'Event 1' },
-    { _id: 'event2', name: 'Event 2' },
-    { _id: 'event3', name: 'Event 3' }
-  ];
-
-  const options = partisipents.map(event => ({
-    value: event._id, 
-    label: event.name 
-  }));
-  
+  const { users, title, setTitle, startDate, setStartDate, endDate, setEndDate, location, setLocation, description, setDescription, selectedOptions, setSelectedOptions, setImage, errors, handleSubmit} = useCreateEvent();
 
 
   return (
@@ -32,7 +20,7 @@ export default function Event({ hidePopUpEvent }) {
               <form 
                   onSubmit={handleSubmit}
                 >
-                    <div className=" flex flex-col justify-center items-start mb-3">
+                    <div className=" flex flex-col justify-center items-start mb-2">
                           <label className=" text-xs lg:text-sm font-medium text-gray-900 mb-1" htmlFor="name">Title <span className=" text-red-600">*</span></label>
                           <input 
                               onChange={ (e) => { setTitle(e.target.value) }}
@@ -45,20 +33,33 @@ export default function Event({ hidePopUpEvent }) {
                           {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title}</p>}
                     </div>
   
-                    <div className=" flex flex-col justify-center items-start mb-3">
-                        <label className=" text-xs lg:text-sm font-medium text-gray-900 mb-1" htmlFor="Date">Date<span className=" text-red-600">*</span></label>
+                    <div className=" flex flex-col justify-center items-start mb-2">
+                        <label className=" text-xs lg:text-sm font-medium text-gray-900 mb-1" htmlFor="Date">Start Date<span className=" text-red-600">*</span></label>
                         <input 
-                            onChange={(e) => { setDate(e.target.value) } }
-                            value={date}
+                            onChange={(e) => { setStartDate(e.target.value) } }
+                            value={startDate}
                             id="date" 
-                            type="date"
+                            type="datetime-local"
                             name="date"
                             className=" w-60 lg:w-72 h-8 lg:h-9 px-1 rounded-md border-[0.5px] border-gray-500 focus:border-blue-600 text-xs lg:text-sm" 
                         />
-                        {errors.date && <p className="text-red-500 text-xs mt-1">{errors.date}</p>}
+                        {errors.startDate && <p className="text-red-500 text-xs mt-1">{errors.startDate}</p>}
+                    </div>
+
+                    <div className=" flex flex-col justify-center items-start mb-2">
+                        <label className=" text-xs lg:text-sm font-medium text-gray-900 mb-1" htmlFor="Date">End Date<span className=" text-red-600">*</span></label>
+                        <input 
+                            onChange={(e) => { setEndDate(e.target.value) } }
+                            value={endDate}
+                            id="date" 
+                            type="datetime-local"
+                            name="date"
+                            className=" w-60 lg:w-72 h-8 lg:h-9 px-1 rounded-md border-[0.5px] border-gray-500 focus:border-blue-600 text-xs lg:text-sm" 
+                        />
+                        {errors.endDate && <p className="text-red-500 text-xs mt-1">{errors.endDate}</p>}
                     </div>
   
-                    <div className=" flex flex-col justify-center items-start mb-3">
+                    <div className=" flex flex-col justify-center items-start mb-2">
                         <label className=" text-xs lg:text-sm font-medium text-gray-900 mb-1" htmlFor="Location">Location<span className=" text-red-600">*</span></label>
                         <input 
                             onChange={(e) => { setLocation(e.target.value) } }
@@ -72,7 +73,7 @@ export default function Event({ hidePopUpEvent }) {
                         {errors.location && <p className="text-red-500 text-xs mt-1">{errors.location}</p>}
                     </div>
   
-                    <div className=" flex flex-col justify-center items-start mb-3">
+                    <div className=" flex flex-col justify-center items-start mb-2">
                         <label className=" text-xs lg:text-sm font-medium text-gray-900 mb-1" htmlFor="desc">Description<span className=" text-red-600">*</span></label>
                         <textarea cols="30" rows="10"
                             onChange={(e) => { setDescription(e.target.value) } }
@@ -85,7 +86,7 @@ export default function Event({ hidePopUpEvent }) {
                         {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description}</p>}
                     </div>
   
-                    <div class="w-64 mb-3">
+                    <div class="w-64 mb-2">
                         <label for="multiple-select" class="text-xs lg:text-sm font-medium text-gray-900 mb-1 block">Select Partisipents</label>
                         <Select
                           className=" w-72 lg:w-72 h-8 lg:h-9 border-gray-800 rounded-md focus:border-blue-600 text-xs lg:text-sm mb-4"
@@ -100,7 +101,7 @@ export default function Event({ hidePopUpEvent }) {
                         />
                     </div>
   
-                    <div className=" mb-3">
+                    <div className=" mb-2">
                       
                       <label class="text-xs lg:text-sm font-medium text-gray-900 mb-1 block" for="file_input">Upload image <span className=" text-red-600">*</span></label>
                       <input 
