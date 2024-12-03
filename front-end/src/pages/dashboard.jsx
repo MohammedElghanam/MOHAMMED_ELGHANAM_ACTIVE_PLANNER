@@ -13,17 +13,17 @@ import UpdateEvent from '../components/forms/updateEvent';
 
 export default function Dashboard() {
 
-  const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-];
-
+  const [eventCount, setEventCount] = useState(0);
+  const [partisipentCount, setPartisipentCount] = useState(0);
   const [createPartispent, setCreatePartispent] = useState(false);
   const [ceateEvent, setCeateEvent] = useState(false);
   const [updatePartispent, setUpdatePartispent] = useState(false);
   const [recivedDataUpdatePartispent, setRecivedDataUpdatePartispent] = useState({});
 
+  const updatePartisipentCount = (count) => {
+    setPartisipentCount(count);
+  };
+  
   const showPopUpPartisipent = () => {
    setCreatePartispent(true)
   }

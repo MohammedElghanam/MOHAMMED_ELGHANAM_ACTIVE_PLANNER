@@ -8,6 +8,21 @@ const useDisplayPartisipent = () => {
     const [error, setError] = useState(null);
     const [dropDown, setDropDown] = useState(false);
     const [updatePartisipent, setupdatePartisipent] = useState();
+
+
+    const sorting = () =>{
+        const sorted =  participants.sort((a, b) => {
+            return a.name - b.name;
+        }); 
+        setParticipants(sorted);
+        console.log(sorted);
+        
+    }
+
+
+
+
+
     
     const showDropDown = (id, participant) => {
         setupdatePartisipent(participant)
@@ -53,7 +68,7 @@ const useDisplayPartisipent = () => {
         fetchParticipants();
     }, []); 
 
-    return { participants, error, dropDown, showDropDown, activeParticipant, updatePartisipent, deleteParticipant};
+    return { participants, error, dropDown, showDropDown, activeParticipant, updatePartisipent, deleteParticipant, sorting};
 };
 
 export default useDisplayPartisipent;

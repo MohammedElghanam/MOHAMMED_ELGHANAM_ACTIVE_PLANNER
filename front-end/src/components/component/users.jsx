@@ -2,15 +2,16 @@ import React from 'react'
 import DropDown from './dropDown';
 import useDisplayPartisipent from '../../hooks/useDisplayPartisipent';
 
-export default function Users({ showPopUpUpdatePartisipent }) {
+export default function Users({ showPopUpUpdatePartisipent, }) {
 
-  const { participants, dropDown, activeParticipant, showDropDown, updatePartisipent, deleteParticipant } = useDisplayPartisipent();
+  const { participants, dropDown, activeParticipant, showDropDown, updatePartisipent, deleteParticipant, sorting } = useDisplayPartisipent();
 
   return (
     <>
         <div className=" col-span-4 h-full rounded-2xl border border-gray-200 overflow-y-auto scrollbar-hide">
-                <div className=" border-b border-gray-200">
+                <div className=" border-b border-gray-200 flex justify-between items-center px-3">
                   <h1 className=' p-2 font-medium text-xl'> Participants </h1>
+                  <button onClick={ () => sorting() }> sort </button>
                 </div>
 
                 <div className=" w-full h-full ">
