@@ -1,13 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { validatePartisipent } from "../validation/validPartisipent";
 
 const useCreatePartisipent = () => {
+    const [events, setEvents] = useState([]);
     const [name, setName] = useState();
     const [email, setEmail] = useState('');
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [image, setImage] = useState(null);
     const [errors, setErrors] = useState({ name: '', email: '', image: '' });
+
+
+    useEffect(() => {
+        const fetchEvents = async () => {
+          try {
+            const token = localStorage.getItem('token');
+            const response = await axios.get('http://localhost:5001/event/', {
+                headers: {
+                'Authorization': `Bearer ${token}`
+                }
+            });
+            const eventsData = response.data; 
+            const formattedOptions = eventsData.map(event => ({
+              value: event._id,
+              label: event.title,
+            }));
+            setEvents(formattedOptions);
+          } catch (error) {
+            console.error("Failed to fetch users:", error);
+          }
+        };
+    
+        fetchEvents();
+    }, []);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -57,6 +83,7 @@ const useCreatePartisipent = () => {
     }
 
     return {
+        events,
         name,
         setName,
         email,

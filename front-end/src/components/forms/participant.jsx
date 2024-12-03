@@ -4,13 +4,13 @@ import useCreatePartisipent from '../../hooks/useCreatePartisipent';
 
 export default function Participant({ hidePopUpPartisipent }) {
 
-  const { email, setEmail, name, setName, selectedOptions, setSelectedOptions, setImage, errors, handleSubmit } = useCreatePartisipent();
+  const { events, email, setEmail, name, setName, selectedOptions, setSelectedOptions, setImage, errors, handleSubmit } = useCreatePartisipent();
 
-  const events = [
-    { _id: 'event1', name: 'Event 1' },
-    { _id: 'event2', name: 'Event 2' },
-    { _id: 'event3', name: 'Event 3' }
-  ];
+  // const events = [
+  //   { _id: 'event1', name: 'Event 1' },
+  //   { _id: 'event2', name: 'Event 2' },
+  //   { _id: 'event3', name: 'Event 3' }
+  // ];
 
   const options = events.map(event => ({
     value: event._id, 
@@ -60,8 +60,8 @@ export default function Participant({ hidePopUpPartisipent }) {
                         className=" w-72 lg:w-72 h-8 lg:h-9 border-gray-800 rounded-md focus:border-blue-600 text-xs lg:text-sm mb-4"
                         isMulti
                         name="selectedOptions"
-                        options={options}
-                        value={options.filter(option => selectedOptions.includes(option.value))}
+                        options={events}
+                        value={events.filter(option => selectedOptions.includes(option.value))}
                         onChange={(selectedOptions) => {
                           setSelectedOptions(selectedOptions.map(option => option.value)); 
                         }}

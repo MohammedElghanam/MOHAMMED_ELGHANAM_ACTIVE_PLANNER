@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Client } from 'minio';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CreateParticipantDto } from './dto/create-participant.dto';
 import { UpdateParticipantDto } from './dto/update-participant.dto';
 import { Participant } from './schemas/participant.schema';
@@ -28,7 +28,9 @@ export class ParticipantService {
 
     if (typeof createParticipantDto.events === 'string') {
       createParticipantDto.events = JSON.parse(createParticipantDto.events);
-      
+      createParticipantDto.events = (createParticipantDto.events as unknown as string[]).map(
+        (id: string) => new Types.ObjectId(id)
+      );
     }
 
     const participantData = {

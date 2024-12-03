@@ -5,6 +5,10 @@ import useDisplayEvent from '../../hooks/useDisplayEvents';
 
 export default function Events() {
   const { Events } = useDisplayEvent();
+  const upcomingEvents = Events.filter(event => new Date(event.startDate) >= Date.now() && new Date(event.startDate) <= new Date(event.endDate));
+
+  console.log( "data" + upcomingEvents);
+  
   const firstThreeEvents = Events.slice(0, 3);
   console.log(firstThreeEvents);
   
@@ -67,17 +71,17 @@ export default function Events() {
               { firstThreeEvents.map((event) => (
                 <div className=" flex flex-col gap-3 col-span-4 rounded-2xl h-52 p-4 border border-gray-300">
                   <h1 className=' font-normal text-3xl flex justify-start items-center gap-1 text-purple-800'>  
-                    {/* {format(new Date(event.date), 'dd')}  */}
+                    {format(new Date(event.startDate), 'dd')} 
                     <p className=' font-normal text-sm mt-3 text-gray-700'> 
-                      {/* {format(new Date(event.date), 'MMM')}  */}
+                      {format(new Date(event.startDate), 'MMM')} 
                     </p>
                   </h1>
                   <h1 className=' font-bold text-gray-900'> { event.title.slice(0, 20) } </h1>
                   <div className=" flex justify-start items-center gap-3">
                     <i class="fa-solid fa-clock text-gray-500"></i>
                     <p className=' text-xs font-medium text-gray-500'>
-                      {/* {format(new Date(event.date), 'hh:mma - hh:mma')} */}
-                      </p>
+                      {format(new Date(event.startDate), 'hh:mma')} -  {format(new Date(event.endDate), 'hh:mma')} 
+                    </p>
                   </div>
                   <div className=" flex justify-start items-center gap-3">
                     <i class="fa-solid fa-location-dot text-gray-500"></i>
@@ -88,17 +92,19 @@ export default function Events() {
                     {event.participants.slice(0, 3).map((participant, index) => (
                       <img
                         key={index}
-                        className={`absolute top-0 left-${index * 8} w-8 h-8 rounded-full border-2 border-gray-50 z-${50 - index * 10}`}
+                        className={`absolute top-0 left-0 w-8 h-8 rounded-full border-2 border-gray-50 z-${50 - index}`}
                         src={participant.image} 
                         alt={`profile-${index}`}
+                        style={{ left: `${index * 20}px`, zIndex: 50 - index }}
                       />
-                      
                     ))}
+
                     {event.participants.length > 3 && (
                       <div className="absolute top-0 left-16 w-8 h-8 rounded-full z-10 bg-purple-800 flex justify-center items-center">
                         <p className="text-xs font-medium text-white">+{event.participants.length - 3}</p>
                       </div>
                     )}
+
                   </div>
 
 
