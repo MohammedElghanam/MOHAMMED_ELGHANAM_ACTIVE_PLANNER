@@ -9,6 +9,7 @@ import SideBar from '../components/component/sideBar';
 import Select from 'react-select';
 import UpdateUser from '../components/forms/updateUser';
 import UpdateEvent from '../components/forms/updateEvent';
+import Test from './test';
 
 
 export default function Dashboard() {
@@ -53,8 +54,10 @@ export default function Dashboard() {
 
 
   return (
-    <div className=" flex justify-center w-full h-screen fixed">
+    <div className=" flex justify-center w-full h-screen fixed bg-gray-200 bg-opacity-20">
         <div className=" w-full h-full flex justify-center gap-4 p-3">
+
+          {/* <Test /> */}
 
           {/* sideBar  */}
           <SideBar showPopUpEvent={ showPopUpEvent } showPopUpPartisipent={ showPopUpPartisipent } />

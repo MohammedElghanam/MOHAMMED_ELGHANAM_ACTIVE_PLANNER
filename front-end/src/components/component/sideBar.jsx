@@ -17,7 +17,7 @@ export default function SideBar({ showPopUpEvent, showPopUpPartisipent }) {
             </div>
             <button  onClick={ showPopUpEvent } className=" flex justify-start items-center gap-3 bg-gray-100 p-2 px-4 rounded-lg hover:bg-gray-200">
               <i class="fa-solid fa-calendar-days text-purple-600"></i>
-              <h1 className=' font-semibold text-purple-600'> Create Events</h1>
+              <h1 className=' font-semibold text-purple-600'> Create Event</h1>
             </button>
             <button onClick={ showPopUpPartisipent } className=" flex justify-start items-center gap-3 bg-gray-100 p-2 px-4 rounded-lg hover:bg-gray-200">
               <i class="fa-solid fa-user text-purple-600"></i>

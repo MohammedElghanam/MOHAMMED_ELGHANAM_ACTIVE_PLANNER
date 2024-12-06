@@ -4,6 +4,7 @@ import Login from "./components/forms/login";
 import Dashboard from "./pages/dashboard";
 import Protected from "./hooks/useProtected";
 import ListEvent from "./components/component/listEvent";
+import Test from "./pages/test";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index="/" element={ <Login /> } />
+          <Route path="/test" element={ <Test /> } />
           <Route path="/events" element={ <ListEvent /> } />
           <Route path="/dashboard" element={ 
             <Protected >

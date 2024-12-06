@@ -10,6 +10,8 @@ export default function ListEvent() {
 
   const { Events, error, dropDown, showDropDown, activeEvent, updateEvent, recivedUpdateEvent, hidePopUpUpdateEvent, showPopUpUpdateEvent, deleteEvent } = useDisplayEvent();
 
+  console.log(Events);
+  
     const navigate = useNavigate();
     const redirect = () => {
         navigate('/dashboard');
@@ -68,7 +70,7 @@ export default function ListEvent() {
                            <i class="fa-solid fa-sm fa-location-dot text-gray-800"></i>
                            <p className=' text-xs font-medium text-purple-800'> { event.location } </p>
                          </div>
-                          { new Date(event.startDate) <= Date.now() && new Date(event.endDate) >= Date.now() &&
+                          {/* { new Date(event.startDate) <= Date.now() && new Date(event.endDate) >= Date.now() && (
                             <div className=" flex justify-start items-center gap-3">
                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path fill="#9333ea" d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z" opacity="0.5" />
@@ -78,7 +80,55 @@ export default function ListEvent() {
                               </svg>
                               <p className=' text-[#9333ea] text-xs font-medium'>Now running ...</p>
                             </div>
-                          }
+                          )} */}
+
+{(() => {
+        const startDate = new Date("2024-12-05T11:16:00Z").getTime(); // UTC time
+        const endDate = new Date("2024-12-05T12:12:00Z").getTime();   // UTC time
+        const now = new Date(); // current time in local timezone
+        
+        // تصحيح إذا أردت عرض الوقت بالتوقيت المحلي
+        console.log("Start Date:", new Date(startDate).toLocaleString());
+        console.log("End Date:", new Date(endDate).toLocaleString());
+        console.log("Current Time:", now.toLocaleString());
+        
+        // مقارنة الوقت المحلي
+        if (startDate <= now.getTime() && endDate >= now.getTime()) {
+            console.log('hello');
+        } else {
+            console.log('no');
+        }
+        
+
+        return null; 
+})()}
+
+                          {new Date(event.startDate).getTime() <= new Date().getTime() && new Date(event.endDate).getTime() >= new Date().getTime() && (
+                            <div className="flex justify-start items-center gap-3">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path
+                                  fill="#9333ea"
+                                  d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z"
+                                  opacity="0.5"
+                                />
+                                <path
+                                  fill="#9333ea"
+                                  d="M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z"
+                                >
+                                  <animateTransform
+                                    attributeName="transform"
+                                    dur="2.3s"
+                                    from="0 12 12"
+                                    repeatCount="indefinite"
+                                    to="360 12 12"
+                                    type="rotate"
+                                  />
+                                </path>
+                              </svg>
+                              <p className="text-[#9333ea] text-xs font-medium">Now running ...</p>
+                            </div>
+                          )}
+
                        </div>
                      </div>
                    </div>

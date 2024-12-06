@@ -1,0 +1,42 @@
+/*  */
+
+
+
+
+
+/* test.css */
+.scroll-container {
+    overflow-y: auto;
+    height: 450px;
+    scroll-snap-type: y mandatory; /* Enable vertical scroll snapping */
+  }
+  
+  .scroll-item {
+    scroll-snap-align: start; /* Ensure each item snaps to the start of the container */
+    padding: 1rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    transition: transform 0.3s;
+  }
+  
+  .user-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+  }
+  
+  .user-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .user-card p {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  

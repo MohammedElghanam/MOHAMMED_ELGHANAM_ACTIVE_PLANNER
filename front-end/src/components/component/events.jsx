@@ -10,6 +10,7 @@ export default function Events() {
   console.log( "data" + upcomingEvents);
   
   const firstThreeEvents = Events.slice(0, 3);
+  const firstScondEvents = Events.slice(0, 2);
   console.log(firstThreeEvents);
   
   const navigate = useNavigate();
@@ -38,27 +39,22 @@ export default function Events() {
             </div>
             <button onClick={ redirect }><p className=" font-normal text-sm text-gray-500 cursor-pointer"> View All</p></button>
           </div>
+
           <div className=" w-full grid grid-cols-8 gap-6">
+          { firstScondEvents.map((event, index) => (
+
             <div className=" col-span-4 h-52  rounded-3xl border border-gray-300">
-              <div className=" w-full h-32 flex justify-center items-start bg-[#f4aeba] rounded-t-3xl">
-                <img className=' w-36 h-36 ' src="wadifa.svg" alt="" />
+              <div className={` w-full h-32 flex justify-center items-start rounded-t-3xl ${index === 0 ? 'bg-[#f4aeba]' : 'bg-[#c4c1e0]'}`}>
+                <img className=' w-36 h-36 ' src={index === 0 ? "wadifa.svg" : "update.svg"} alt="" />
               </div>
               <div className=" flex flex-col gap-0.5 w-full h-20 bg-gray-50 rounded-b-3xl px-4 py-2">
-                <h1 className=' font-semibold'> Creator Meetup</h1>
-                <p className=' text-xs text-gray-500'>10 Aug, 2020 : 10:15AM - 12:30PM</p>
-                <p className=' text-xs font-medium text-purple-800'>142 Members</p>
+                <h1 className=' font-semibold'> { event.title.slice(0, 20) } </h1>
+                <p className=' text-xs text-gray-500'> {format(new Date(event.startDate), 'dd MMM, yyyy : hh:mma')} -  {format(new Date(event.endDate), 'hh:mma')}  </p>
+                <p className=' text-xs font-medium text-purple-800'> { event.participants.length } Members</p>
               </div>
             </div>
-            <div className=" col-span-4 h-52 rounded-3xl border border-gray-400">
-              <div className=" w-full h-32 flex justify-center items-start bg-[#c4c1e0] rounded-t-3xl">
-                <img className=' w-36 h-36' src="update.svg" alt="" />
-              </div>
-              <div className=" flex flex-col gap-0.5 w-full h-20 bg-gray-50 rounded-b-3xl px-4 py-2">
-                <h1 className=' font-semibold'> Creator Meetup</h1>
-                <p className=' text-xs text-gray-500'>10 Aug, 2020 : 10:15AM - 12:30PM</p>
-                <p className=' text-xs font-medium text-purple-800'>142 Members</p>
-              </div>
-            </div>
+
+          ))}
           </div>
         </div>
 
@@ -70,44 +66,42 @@ export default function Events() {
             <div className=" w-full grid grid-cols-12 gap-6 ">
               { firstThreeEvents.map((event) => (
                 <div className=" flex flex-col gap-3 col-span-4 rounded-2xl h-52 p-4 border border-gray-300">
-                  <h1 className=' font-normal text-3xl flex justify-start items-center gap-1 text-purple-800'>  
-                    {format(new Date(event.startDate), 'dd')} 
-                    <p className=' font-normal text-sm mt-3 text-gray-700'> 
-                      {format(new Date(event.startDate), 'MMM')} 
-                    </p>
-                  </h1>
-                  <h1 className=' font-bold text-gray-900'> { event.title.slice(0, 20) } </h1>
-                  <div className=" flex justify-start items-center gap-3">
-                    <i class="fa-solid fa-clock text-gray-500"></i>
-                    <p className=' text-xs font-medium text-gray-500'>
-                      {format(new Date(event.startDate), 'hh:mma')} -  {format(new Date(event.endDate), 'hh:mma')} 
-                    </p>
-                  </div>
-                  <div className=" flex justify-start items-center gap-3">
-                    <i class="fa-solid fa-location-dot text-gray-500"></i>
-                    <p className=' text-xs font-medium text-gray-500'>{ event.location }</p>
-                  </div>
+                    <h1 className=' font-normal text-3xl flex justify-start items-center gap-1 text-purple-800'>  
+                      {format(new Date(event.startDate), 'dd')} 
+                      <p className=' font-normal text-sm mt-3 text-gray-700'> 
+                        {format(new Date(event.startDate), 'MMM')} 
+                      </p>
+                    </h1>
+                    <h1 className=' text-left font-bold text-gray-900'> { event.title.slice(0, 20) } </h1>
+                    <div className=" flex justify-start items-center gap-3">
+                      <i class="fa-solid fa-clock text-gray-500"></i>
+                      <p className=' text-xs font-medium text-gray-500'>
+                        {format(new Date(event.startDate), 'hh:mma')} -  {format(new Date(event.endDate), 'hh:mma')} 
+                      </p>
+                    </div>
+                    <div className=" flex justify-start items-center gap-3">
+                      <i class="fa-solid fa-location-dot text-gray-500"></i>
+                      <p className=' text-xs font-medium text-gray-500'>{ event.location }</p>
+                    </div>
 
-                  <div className="mt-2 flex relative">
-                    {event.participants.slice(0, 3).map((participant, index) => (
-                      <img
-                        key={index}
-                        className={`absolute top-0 left-0 w-8 h-8 rounded-full border-2 border-gray-50 z-${50 - index}`}
-                        src={participant.image} 
-                        alt={`profile-${index}`}
-                        style={{ left: `${index * 20}px`, zIndex: 50 - index }}
-                      />
-                    ))}
+                    <div className="mt-2 flex relative">
+                      {event.participants.slice(0, 3).map((participant, index) => (
+                        <img
+                          key={index}
+                          className={`absolute top-0 left-0 w-8 h-8 rounded-full border-2 border-gray-50 z-${50 - index}`}
+                          src={participant.image} 
+                          alt={`profile-${index}`}
+                          style={{ left: `${index * 20}px`, zIndex: 50 - index }}
+                        />
+                      ))}
 
-                    {event.participants.length > 3 && (
-                      <div className="absolute top-0 left-16 w-8 h-8 rounded-full z-10 bg-purple-800 flex justify-center items-center">
-                        <p className="text-xs font-medium text-white">+{event.participants.length - 3}</p>
-                      </div>
-                    )}
+                      {event.participants.length > 3 && (
+                        <div className="absolute top-0 left-16 w-8 h-8 rounded-full z-10 bg-purple-800 flex justify-center items-center">
+                          <p className="text-xs font-medium text-white">+{event.participants.length - 3}</p>
+                        </div>
+                      )}
 
-                  </div>
-
-
+                    </div>
                 </div>
               )) }
             </div>
